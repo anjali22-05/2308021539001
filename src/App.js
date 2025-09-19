@@ -62,7 +62,7 @@ const URLShortenerPage = ({ shortenURL, data, error, loading }) => {
       </Button>
       {loading && <CircularProgress sx={{ display: 'block', my: 2 }} />}
       {error && <Alert severity="error" sx={{ my: 2 }}>{error}</Alert>}
-      {data.length > 0 && (
+      {data && data.length > 0 && (
         <Box sx={{ mt: 4 }}>
           <Typography variant="h5" component="h2" gutterBottom>
             Shortened Links
@@ -82,9 +82,11 @@ const URLShortenerPage = ({ shortenURL, data, error, loading }) => {
     </Container>
   );
 };
+
 const StatisticsPage = () => {
   const { shortcode } = useParams();
   const [stats, setStats] = useState(null);
+
   useEffect(() => {
     setStats({
       totalClicks: 15,
@@ -94,6 +96,7 @@ const StatisticsPage = () => {
       ]
     });
   }, [shortcode]);
+
   if (!stats) {
     return <Typography variant="h6">Loading statistics...</Typography>;
   }
@@ -118,6 +121,7 @@ const StatisticsPage = () => {
     </Container>
   );
 };
+
 const RedirectionHandler = () => {
   const { shortcode } = useParams();
   const navigate = useNavigate();
@@ -137,6 +141,7 @@ const RedirectionHandler = () => {
 
   return <CircularProgress sx={{ display: 'block', margin: 'auto', mt: 10 }} />;
 };
+
 function App() {
   const [shortenedUrls, setShortenedUrls] = useState([]);
   const [loading, setLoading] = useState(false);
